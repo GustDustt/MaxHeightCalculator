@@ -3,17 +3,21 @@
 #include <stdexcept>
 #include <vector>
 
+// Calculates max density using easy to get inputs
 double calculateDensityMax(double mass, double propDiameter, double propCount, double rpm, double thrustCoeff) {
     double n = rpm / 60.0;
     double weight = mass * GRAVITY;
     return weight / (propCount * std::pow(n, 2.0) * std::pow(propDiameter, 4.0) * thrustCoeff);
 }
 
+// Calculates max density using inputs you would need to calculate yourself
 double calculateDensityMaxFromRun(double densityRun, double mass, double propCount, double thrustPerRotor) {
     double weight = mass * GRAVITY;
     return densityRun * (weight / (propCount * thrustPerRotor));
 }
 
+
+// Calculates max height using the max density the drone could reach, and putting into a specific ISA layer
 double calculateHeight(double densityMax) {
     if (densityMax <= 0.0)
         throw std::invalid_argument("Density must be positive.");
